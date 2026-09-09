@@ -26,17 +26,20 @@ public class NominationService {
     private final OfficerRepository officerRepository;
     private final TrainingProgrammeRepository trainingProgrammeRepository;
     private final DepartmentRepository departmentRepository;
+    private final EligibilityService eligibilityService;
 
     public NominationService(
             NominationRepository nominationRepository,
             OfficerRepository officerRepository,
             TrainingProgrammeRepository trainingProgrammeRepository,
-            DepartmentRepository departmentRepository
+            DepartmentRepository departmentRepository,
+            EligibilityService eligibilityService
     ) {
         this.nominationRepository = nominationRepository;
         this.officerRepository = officerRepository;
         this.trainingProgrammeRepository = trainingProgrammeRepository;
         this.departmentRepository = departmentRepository;
+        this.eligibilityService = eligibilityService;
     }
 
     @Transactional
@@ -66,6 +69,8 @@ public class NominationService {
                     "This officer has already been nominated for this training programme."
             );
         }
+
+        eligibilityService.validateEligibility(officer, trainingProgramme);
 
         Nomination nomination = new Nomination();
         nomination.setOfficer(officer);

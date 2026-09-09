@@ -57,7 +57,15 @@ public class OfficerMvcController {
         try {
             officerService.createOfficer(officer);
         } catch (IllegalArgumentException exception) {
-            bindingResult.rejectValue("employeeNumber", "employeeNumber", exception.getMessage());
+            if ("Email address already exists".equals(exception.getMessage())) {
+                bindingResult.rejectValue("email", "email", exception.getMessage());
+            } else {
+                bindingResult.rejectValue(
+                        "employeeNumber",
+                        "employeeNumber",
+                        exception.getMessage()
+                );
+            }
             addPageData(model);
             return "officers";
         }

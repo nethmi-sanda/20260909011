@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,10 @@ public class Officer {
     @ManyToOne(optional = false)
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
+
+    private String designation;
+
+    private LocalDate serviceStartDate;
 
     public Officer() {
     }
@@ -78,5 +84,21 @@ public class Officer {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public LocalDate getServiceStartDate() {
+        return serviceStartDate;
+    }
+
+    public void setServiceStartDate(LocalDate serviceStartDate) {
+        this.serviceStartDate = serviceStartDate;
     }
 }

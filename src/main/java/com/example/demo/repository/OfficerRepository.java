@@ -9,4 +9,6 @@ import com.example.demo.model.Officer;
 public interface OfficerRepository extends JpaRepository<Officer, Long> {
 
     Optional<Officer> findByEmployeeNumber(String employeeNumber);
+
+    Optional<Officer> findByEmailIgnoreCase(String email);
 }

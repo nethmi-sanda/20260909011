@@ -64,7 +64,7 @@
                     <h2 class="h5 mb-3">Programme List</h2>
                     <div class="table-responsive">
                         <table class="table table-striped align-middle mb-0">
-                            <thead><tr><th>Title</th><th>Date</th><th>Venue</th><th>Trainer</th><th>Capacity</th></tr></thead>
+                            <thead><tr><th>Title</th><th>Date</th><th>Venue</th><th>Trainer</th><th>Capacity</th><th>Eligibility</th></tr></thead>
                             <tbody>
                             <tr th:each="item : ${programmes}">
                                 <td th:text="${item.title}"></td>
@@ -72,8 +72,14 @@
                                 <td th:text="${item.venue}"></td>
                                 <td th:text="${item.trainerName}"></td>
                                 <td th:text="${item.maxParticipants}"></td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       th:href="@{/programmes/{id}/eligibility-rules(id=${item.id})}">
+                                        Manage Rules
+                                    </a>
+                                </td>
                             </tr>
-                            <tr th:if="${#lists.isEmpty(programmes)}"><td colspan="5" class="text-center text-secondary">No training programmes available.</td></tr>
+                            <tr th:if="${#lists.isEmpty(programmes)}"><td colspan="6" class="text-center text-secondary">No training programmes available.</td></tr>
                             </tbody>
                         </table>
                     </div>

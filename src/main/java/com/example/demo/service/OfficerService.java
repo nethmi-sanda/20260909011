@@ -28,6 +28,17 @@ public class OfficerService {
             throw new IllegalArgumentException("Employee number already exists");
         }
 
+        String email = officer.getEmail();
+        if (email != null && !email.isBlank()) {
+            email = email.trim();
+            if (officerRepository.findByEmailIgnoreCase(email).isPresent()) {
+                throw new IllegalArgumentException("Email address already exists");
+            }
+            officer.setEmail(email);
+        } else {
+            officer.setEmail(null);
+        }
+
         Long departmentId = officer.getDepartment().getId();
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found"));

@@ -71,12 +71,16 @@ public class DevelopmentDataInitializer implements CommandLineRunner {
         firstOfficer.setFullName("A. Perera");
         firstOfficer.setEmail("aperera@example.com");
         firstOfficer.setDepartment(finance);
+        firstOfficer.setDesignation("Manager");
+        firstOfficer.setServiceStartDate(LocalDate.now().minusYears(7));
 
         Officer secondOfficer = new Officer();
         secondOfficer.setEmployeeNumber("EMP002");
         secondOfficer.setFullName("N. Silva");
         secondOfficer.setEmail("nsilva@example.com");
         secondOfficer.setDepartment(administration);
+        secondOfficer.setDesignation("Officer");
+        secondOfficer.setServiceStartDate(LocalDate.now().minusYears(3));
 
         officerRepository.saveAll(List.of(firstOfficer, secondOfficer));
     }

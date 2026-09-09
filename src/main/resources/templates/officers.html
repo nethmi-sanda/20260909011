@@ -45,6 +45,15 @@
                             <div class="invalid-feedback" th:errors="*{email}"></div>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label required" for="designation">Designation</label>
+                            <input class="form-control" id="designation" th:field="*{designation}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required" for="serviceStartDate">Service Start Date</label>
+                            <input class="form-control" id="serviceStartDate" type="date"
+                                   th:field="*{serviceStartDate}" required>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label required" for="department">Department</label>
                             <select class="form-select" th:classappend="${#fields.hasErrors('department')} ? 'is-invalid'" id="department" th:field="*{department.id}" required>
                                 <option value="">Select a department</option>
@@ -64,15 +73,17 @@
                     <h2 class="h5 mb-3">Officer List</h2>
                     <div class="table-responsive">
                         <table class="table table-striped align-middle mb-0">
-                            <thead><tr><th>Employee No.</th><th>Name</th><th>Email</th><th>Department</th></tr></thead>
+                            <thead><tr><th>Employee No.</th><th>Name</th><th>Email</th><th>Department</th><th>Designation</th><th>Service Start</th></tr></thead>
                             <tbody>
                             <tr th:each="item : ${officers}">
                                 <td th:text="${item.employeeNumber}"></td>
                                 <td th:text="${item.fullName}"></td>
                                 <td th:text="${item.email}"></td>
                                 <td th:text="${item.department.name}"></td>
+                                <td th:text="${item.designation ?: 'Not set'}"></td>
+                                <td th:text="${item.serviceStartDate ?: 'Not set'}"></td>
                             </tr>
-                            <tr th:if="${#lists.isEmpty(officers)}"><td colspan="4" class="text-center text-secondary">No officers available.</td></tr>
+                            <tr th:if="${#lists.isEmpty(officers)}"><td colspan="6" class="text-center text-secondary">No officers available.</td></tr>
                             </tbody>
                         </table>
                     </div>

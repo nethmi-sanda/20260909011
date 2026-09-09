@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nominations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-government">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Government Training Management</a>
+        <a class="btn btn-outline-light btn-sm" th:href="@{/}">Dashboard</a>
+    </div>
+</nav>
+
+<main class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div class="page-header">
+            <h1 class="h3 mb-1">Nominations</h1>
+            <p class="text-secondary mb-0">Submitted officer training nominations.</p>
+        </div>
+        <a class="btn btn-government" th:href="@{/nominations/new}">New Nomination</a>
+    </div>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Training Programme</th>
+                        <th>Employee No.</th>
+                        <th>Officer Name</th>
+                        <th>Officer Department</th>
+                        <th>Nominated By</th>
+                        <th>Nomination Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${nominations}">
+                        <td th:text="${item.trainingProgramme.title}"></td>
+                        <td th:text="${item.officer.employeeNumber}"></td>
+                        <td th:text="${item.officer.fullName}"></td>
+                        <td th:text="${item.officer.department.name}"></td>
+                        <td th:text="${item.nominatedByDepartment.name}"></td>
+                        <td th:text="${item.nominationDate}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(nominations)}">
+                        <td colspan="6" class="text-center text-secondary">No nominations have been submitted.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

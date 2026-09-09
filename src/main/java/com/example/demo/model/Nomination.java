@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -46,6 +48,11 @@ public class Nomination {
     @Column(nullable = false)
     private LocalDateTime nominationDate;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'CONFIRMED'")
+    private NominationStatus status;
+
     public Nomination() {
     }
 
@@ -87,5 +94,13 @@ public class Nomination {
 
     public void setNominationDate(LocalDateTime nominationDate) {
         this.nominationDate = nominationDate;
+    }
+
+    public NominationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(NominationStatus status) {
+        this.status = status;
     }
 }

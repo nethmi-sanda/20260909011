@@ -5,12 +5,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.NominationRequest;
 import com.example.demo.exception.DuplicateNominationException;
+import com.example.demo.model.Nomination;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.NominationService;
 import com.example.demo.service.OfficerService;
@@ -67,7 +69,11 @@ public class NominationMvcController {
         }
 
         try {
-            nominationService.createNomination(request);
+            Nomination nomination = nominationService.createNomination(request);
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Nomination created with status: " + nomination.getStatus() + "."
+            );
         } catch (DuplicateNominationException exception) {
             model.addAttribute("errorMessage", exception.getMessage());
             addFormData(model);
@@ -78,7 +84,16 @@ public class NominationMvcController {
             return "nomination-form";
         }
 
-        redirectAttributes.addFlashAttribute("successMessage", "Officer nominated successfully.");
+        return "redirect:/nominations";
+    }
+
+    @PostMapping("/{id}/cancel")
+    public String cancelNomination(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes
+    ) {
+        nominationService.cancelNomination(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Nomination cancelled successfully.");
         return "redirect:/nominations";
     }
 

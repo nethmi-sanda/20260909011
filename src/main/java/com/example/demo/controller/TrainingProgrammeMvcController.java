@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.TrainingProgramme;
 import com.example.demo.service.TrainingProgrammeService;
+import com.example.demo.service.NominationService;
 
 import jakarta.validation.Valid;
 
@@ -19,9 +20,14 @@ import jakarta.validation.Valid;
 public class TrainingProgrammeMvcController {
 
     private final TrainingProgrammeService trainingProgrammeService;
+    private final NominationService nominationService;
 
-    public TrainingProgrammeMvcController(TrainingProgrammeService trainingProgrammeService) {
+    public TrainingProgrammeMvcController(
+            TrainingProgrammeService trainingProgrammeService,
+            NominationService nominationService
+    ) {
         this.trainingProgrammeService = trainingProgrammeService;
+        this.nominationService = nominationService;
     }
 
     @GetMapping
@@ -29,7 +35,7 @@ public class TrainingProgrammeMvcController {
         if (!model.containsAttribute("trainingProgramme")) {
             model.addAttribute("trainingProgramme", new TrainingProgramme());
         }
-        model.addAttribute("programmes", trainingProgrammeService.getAllTrainingProgrammes());
+        addProgrammeData(model);
         return "training-programmes";
     }
 
@@ -41,12 +47,17 @@ public class TrainingProgrammeMvcController {
             RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("programmes", trainingProgrammeService.getAllTrainingProgrammes());
+            addProgrammeData(model);
             return "training-programmes";
         }
 
         trainingProgrammeService.createTrainingProgramme(trainingProgramme);
         redirectAttributes.addFlashAttribute("successMessage", "Training programme added successfully.");
         return "redirect:/programmes";
+    }
+
+    private void addProgrammeData(Model model) {
+        model.addAttribute("programmes", trainingProgrammeService.getAllTrainingProgrammes());
+        model.addAttribute("capacitySummaries", nominationService.getProgrammeCapacitySummaries());
     }
 }

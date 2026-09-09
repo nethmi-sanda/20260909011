@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Nomination;
+import com.example.demo.model.NominationStatus;
 
 public interface NominationRepository extends JpaRepository<Nomination, Long> {
 
@@ -14,4 +15,14 @@ public interface NominationRepository extends JpaRepository<Nomination, Long> {
     );
 
     List<Nomination> findByTrainingProgrammeId(Long trainingProgrammeId);
+
+    long countByTrainingProgrammeIdAndStatus(
+            Long trainingProgrammeId,
+            NominationStatus status
+    );
+
+    List<Nomination> findByTrainingProgrammeIdAndStatusOrderByNominationDateAsc(
+            Long trainingProgrammeId,
+            NominationStatus status
+    );
 }

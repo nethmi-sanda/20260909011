@@ -81,6 +81,37 @@
             </div>
         </div>
     </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2 class="h5 mb-3">Programme Capacity Summary</h2>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Training Programme</th>
+                        <th>Maximum Capacity</th>
+                        <th>Confirmed</th>
+                        <th>Waiting</th>
+                        <th>Available Seats</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="summary : ${capacitySummaries}">
+                        <td th:text="${summary.trainingProgramme.title}"></td>
+                        <td th:text="${summary.trainingProgramme.maxParticipants}"></td>
+                        <td th:text="${summary.confirmedParticipants}"></td>
+                        <td th:text="${summary.waitingListCount}"></td>
+                        <td th:text="${summary.availableSeats}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(capacitySummaries)}">
+                        <td colspan="5" class="text-center text-secondary">No capacity information available.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
